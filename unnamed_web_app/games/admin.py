@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Game, Review, Profile, TopGames
+from ..unnamed_web_app.models import Game, Review, Profile, TopGames
 
 admin.site.register(Game)
 admin.site.register(Review)
