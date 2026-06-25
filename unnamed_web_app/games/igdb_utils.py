@@ -21,7 +21,7 @@ def fetch_game_from_igdb(title):
         'Client-ID': settings.IGDB_CLIENT_ID,
         'Authorization': f'Bearer {token}'
     }
-    body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name; limit 5;'
+    body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name,summary,genres.name; limit 5;'
     response = requests.post(
         'https://api.igdb.com/v4/games',
         headers = headers,
@@ -38,5 +38,7 @@ def save_igdb_results(results):
                 'title': entry['name'],
                 'cover_image_url': 'https:' + entry['cover']['url'] if entry.get('cover') else '',
                 'release_date': datetime.date.fromtimestamp(entry['first_release_date']) if entry.get('first_release_date') else None,
+                'descripton': entry.get('summary', ''),
+                'genre': entry['genres'][0]['name'] if entry.get('genres') else '',
             }
         )

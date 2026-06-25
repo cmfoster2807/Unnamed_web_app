@@ -9,7 +9,9 @@ class Game(models.Model):
     cover_image_url = models.URLField(blank=True)
     release_date = models.DateField(null=True, blank=True)
     platform = models.CharField(max_length=100, blank=True)
-
+    description = models.TextField(blank = True)
+    genre = models.CharField(max_length = 100, blank = True)
+    
     def __str__(self):
         return self.title
 
@@ -51,4 +53,6 @@ class TopGames(models.Model):
     class Meta:
         unique_together = ('profile', 'position')
         ordering = ['position']
+        verbose_name = 'Top Games'
+        verbose_name_plural = 'Top Games'
 
