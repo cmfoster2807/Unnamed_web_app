@@ -1,5 +1,6 @@
 import requests
 import datetime
+from django.conf import settings
 from .models import Game
 
 # Generates the igdb token to link the database
