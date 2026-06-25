@@ -14,7 +14,7 @@ def get_igdb_token():
     return responce.json()['access_token']
 
 # Runs the commands to update the game models with database information
-def fetch_game_from_idgb(title):
+def fetch_game_from_igdb(title):
     token = get_igdb_token()
     headers = {
         'Client-ID': settings.ID_CLIENT_ID,
