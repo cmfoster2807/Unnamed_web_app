@@ -18,7 +18,7 @@ def get_igdb_token():
 def fetch_game_from_igdb(title):
     token = get_igdb_token()
     headers = {
-        'Client-ID': settings.ID_CLIENT_ID,
+        'Client-ID': settings.IGDB_CLIENT_ID,
         'Authorization': f'Bearer {token}'
     }
     body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name; limit 5;'
