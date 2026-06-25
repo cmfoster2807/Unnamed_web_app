@@ -24,9 +24,10 @@ def fetch_game_from_igdb(title):
     body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name; limit 5;'
     response = requests.post(
         'https://api.igdb.com/v4/games',
+        headers = headers,
         data = body
     )
-    return responce.json()
+    return response.json()
 
 # saves the results to the proper model
 def save_igdb_results(results):
