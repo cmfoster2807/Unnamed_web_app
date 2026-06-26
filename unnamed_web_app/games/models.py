@@ -56,3 +56,30 @@ class TopGames(models.Model):
         verbose_name = 'Top Games'
         verbose_name_plural = 'Top Games'
 
+# Model for creating and managing lists 
+class GameList(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='lists') # Many to one relationship to user
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_public = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.title} by {self.profile.user.username}"
+
+
+# Creates a model with the information specifically for an entry to a game list
+class GameListEntry(models.Model):
+    # Many to one relationship with the list and the game
+    game_list = models.ForeignKey(GameList, on_delete=models.CASCADE, related_name='entries')
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+
+    position = models.PositiveIntegerField()
+    note = models.CharField(max_length=300, blank=True)
+
+    class Meta: # Allows for display settings and metadata specifications
+        unique_together = ('game_list', 'position')
+        ordering = ['position']
+
+    def __str__(self):
+        return f"{self.position}. {self.game.title}"
