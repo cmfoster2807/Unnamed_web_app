@@ -1,7 +1,15 @@
 from django.db import models 
 from django.contrib.auth.models import User
 
+# Model for developers links to and from games
+class Developer(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    date_established = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=200, blank=True)
 
+    def __str__(self):
+        return self.name
+    
 # Base model for the game database
 class Game(models.Model):
     title = models.CharField(max_length=200)
@@ -11,6 +19,11 @@ class Game(models.Model):
     platform = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank = True)
     genre = models.CharField(max_length = 100, blank = True)
+    developer = models.ForeignKey(
+        Developer, null = True, blank = True,
+        on_delete = models.SET_NULL,
+        related_name = 'games'
+    )
     
     def __str__(self):
         return self.title
