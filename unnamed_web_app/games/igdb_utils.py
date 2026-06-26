@@ -21,7 +21,7 @@ def fetch_game_from_igdb(title):
         'Client-ID': settings.IGDB_CLIENT_ID,
         'Authorization': f'Bearer {token}'
     }
-    body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name,summary,genres.name; limit 5;'
+    body = f'search "{title}"; fields name,cover.url,first_release_date,platforms.name,involved_companies.company.name,involved_companies.company.start_date,involved_companies.company.country,involved_companies.developer; limit 5;'
     response = requests.post(
         'https://api.igdb.com/v4/games',
         headers = headers,
@@ -30,15 +30,34 @@ def fetch_game_from_igdb(title):
     return response.json()
 
 # saves the results to the proper model
+import datetime
+from .models import Game, Developer
+
 def save_igdb_results(results):
     for entry in results:
+        developer_obj = None
+
+        for company in entry.get('involved_companies', []):
+            if company.get('developer'):
+                company_data = company['company']
+                developer_obj, _ = Developer.objects.update_or_create(
+                    name=company_data['name'],
+                    defaults={
+                        'date_established': (
+                            datetime.date.fromtimestamp(company_data['start_date'])
+                            if company_data.get('start_date') else None
+                        ),
+                        'location': str(company_data.get('country', '')) if company_data.get('country') else '',
+                    }
+                )
+                break  # take the first listed developer only
+
         Game.objects.update_or_create(
-            igdb_id = entry['id'],
-            defaults = {
+            igdb_id=entry['id'],
+            defaults={
                 'title': entry['name'],
                 'cover_image_url': 'https:' + entry['cover']['url'] if entry.get('cover') else '',
                 'release_date': datetime.date.fromtimestamp(entry['first_release_date']) if entry.get('first_release_date') else None,
-                'descripton': entry.get('summary', ''),
-                'genre': entry['genres'][0]['name'] if entry.get('genres') else '',
+                'developer': developer_obj,
             }
         )
