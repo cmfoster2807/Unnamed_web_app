@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gameboxd</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="#">
+                <span class="brand-mark">G</span>
+                <span class="brand-text">Gameboxd</span>
+            </a>
+
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="#">Home</a>
+                <a href="#">Games</a>
+                <a href="#">Lists</a>
+                <a href="#">Search</a>
+                <a href="#">Profile</a>
+            </nav>
+
+            <a class="nav-cta" href="#">Start Logging</a>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Track your games. Rate what you play. Build your gaming profile.</p>
+                    <h1>One clean home for your backlog, favorites, reviews, and future platinums.</h1>
+                    <p class="hero-text">
+                        Gameboxd brings your taste, your progress, and your community together with a smoother
+                        layout built for players who actually want to keep coming back.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#">Start Logging</a>
+                        <a class="button button-secondary" href="#">Browse Games</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div>
+                            <strong>2.4k</strong>
+                            <span>logs this week</span>
+                        </div>
+                        <div>
+                            <strong>318</strong>
+                            <span>games wishlisted tonight</span>
+                        </div>
+                        <div>
+                            <strong>97</strong>
+                            <span>fresh platinum badges</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-showcase">
+                    <div class="showcase-panel feature-panel">
+                        <p class="panel-label">Tonight's vibe</p>
+                        <h2>From chill clears to full-combo sweat sessions.</h2>
+                        <p>
+                            Log a run, mark a game as completed, or stash a new obsession in your wishlist without
+                            the UI getting in your way.
+                        </p>
+                        <div class="feature-tags">
+                            <span>Backlog</span>
+                            <span>Reviews</span>
+                            <span>Platinums</span>
+                            <span>Friends</span>
+                        </div>
+                    </div>
+
+                    <div class="showcase-grid">
+                        <article class="showcase-card">
+                            <p class="panel-label">Most logged</p>
+                            <h3>Sekiro: Shadows Die Twice</h3>
+                            <p>4.8 average rating</p>
+                        </article>
+                        <article class="showcase-card">
+                            <p class="panel-label">Friend favorite</p>
+                            <h3>Hollow Knight: Silksong</h3>
+                            <p>86 new reviews today</p>
+                        </article>
+                        <article class="showcase-card accent-card">
+                            <p class="panel-label">Next unlock</p>
+                            <h3>Platinum Tracker</h3>
+                            <p>Showcase mastered games right on your profile.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Popular This Week</p>
+                        <h2>What the community is logging right now</h2>
+                    </div>
+                    <a class="section-link" href="#">See full chart</a>
+                </div>
+
+                <div class="games-grid">
+                    <article class="game-card ember-card">
+                        <div class="game-art">
+                            <span class="game-tag">Action Adventure</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Sekiro: Shadows Die Twice</h3>
+                            <p>A challenging action-adventure game that's been gaining popularity.</p>
+                            <div class="game-meta">
+                                <span>4.8 avg</span>
+                                <span>2.1k logs</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="game-card cobalt-card">
+                        <div class="game-art">
+                            <span class="game-tag">Sci-Fi RPG</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Cyberpunk 2077</h3>
+                            <p>Players are revisiting Night City and pushing new builds.</p>
+                            <div class="game-meta">
+                                <span>4.4 avg</span>
+                                <span>1.7k logs</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="game-card moss-card">
+                        <div class="game-art">
+                            <span class="game-tag">Metroidvania</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Hollow Knight: Silksong</h3>
+                            <p>A forever favorite for challenge runs and replay logs.</p>
+                            <div class="game-meta">
+                                <span>4.9 avg</span>
+                                <span>1.2k logs</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="game-card neon-card">
+                        <div class="game-art">
+                            <span class="game-tag">Character Action</span>
+                        </div>
+                        <div class="game-info">
+                            <h3>Subnautica 2</h3>
+                            <p>Deep-sea survival, alien oceans, and plenty of new creatures to discover.</p>
+                            <div class="game-meta">
+                                <span>4.6 avg</span>
+                                <span>980 logs</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="split-layout">
+                <article class="panel activity-panel">
+                    <div class="section-heading">
+                        <div>
+                            <p class="section-kicker">Recent Activity</p>
+                            <h2>Friends and followers keep the page alive</h2>
+                        </div>
+                    </div>
+
+                    <ul class="activity-list">
+                        <li>
+                            <span class="avatar">A</span>
+                            <div class="activity-copy">
+                                <p><strong>Alex</strong> rated <strong>Hollow Knight: Silksong</strong> five stars.</p>
+                                <span>2 minutes ago</span>
+                            </div>
+                            <span class="activity-badge">Review</span>
+                        </li>
+                        <li>
+                            <span class="avatar">M</span>
+                            <div class="activity-copy">
+                                <p><strong>Maya</strong> added <strong>Cyberpunk 2077</strong> to their wishlist.</p>
+                                <span>18 minutes ago</span>
+                            </div>
+                            <span class="activity-badge">Wishlist</span>
+                        </li>
+                        <li>
+                            <span class="avatar">R</span>
+                            <div class="activity-copy">
+                                <p><strong>Ryan</strong> completed <strong>God of War Ragnarok</strong>.</p>
+                                <span>42 minutes ago</span>
+                            </div>
+                            <span class="activity-badge">Completed</span>
+                        </li>
+                        <li>
+                            <span class="avatar">S</span>
+                            <div class="activity-copy">
+                                <p><strong>Sage</strong> logged 6 more hours in <strong>Balatro</strong>.</p>
+                                <span>1 hour ago</span>
+                            </div>
+                            <span class="activity-badge">Session</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <aside class="side-stack">
+                    <article class="panel">
+                        <div class="section-heading">
+                            <div>
+                                <p class="section-kicker">Trending Lists</p>
+                                <h2>Curated paths into the catalog</h2>
+                            </div>
+                        </div>
+
+                        <ul class="stack-list">
+                            <li>
+                                <strong>Best Games Under 10 Hours</strong>
+                                <span>Tight experiences with zero filler.</span>
+                            </li>
+                            <li>
+                                <strong>Games Worth Mastering</strong>
+                                <span>Perfect for completionists chasing the flex.</span>
+                            </li>
+                            <li>
+                                <strong>Most Anticipated Releases</strong>
+                                <span>The countdown list everyone keeps refreshing.</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="panel challenge-panel">
+                        <div class="section-heading">
+                            <div>
+                                <p class="section-kicker">Community Challenges</p>
+                                <h2>Small goals that make the backlog move</h2>
+                            </div>
+                        </div>
+
+                        <ul class="stack-list">
+                            <li>
+                                <strong>Finish 3 backlog games this month</strong>
+                                <span>Turn the pile into progress.</span>
+                            </li>
+                            <li>
+                                <strong>Platinum one game this week</strong>
+                                <span>Highlight it on your profile when you do.</span>
+                            </li>
+                            <li>
+                                <strong>Log every game night for 7 days</strong>
+                                <span>Build a streak and show off your taste curve.</span>
+                            </li>
+                        </ul>
+                    </article>
+                </aside>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
