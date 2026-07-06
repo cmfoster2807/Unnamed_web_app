@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ game.title|default:"Sekiro: Shadows Die Twice" }} | Gameboxd</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+</head>
+<body class="detail-page">
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="#">
+                <span class="brand-mark">G</span>
+                <span class="brand-text">Gameboxd</span>
+            </a>
+
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="#">Home</a>
+                <a href="#">Games</a>
+                <a href="#">Lists</a>
+                <a href="#">Search</a>
+                <a href="#">Profile</a>
+            </nav>
+
+            <a class="nav-cta" href="#">Start Logging</a>
+        </header>
+
+        <main>
+            <section class="detail-hero">
+                <div class="game-cover" aria-label="Cover image placeholder">
+                    <span class="cover-kicker">Cover</span>
+                    <span class="cover-title">Sekiro</span>
+                    <span class="cover-subtitle">Shadows Die Twice</span>
+                </div>
+
+                <article class="detail-intro panel">
+                    <p class="eyebrow">Featured game</p>
+                    <div class="title-row">
+                        <div>
+                            <h1>{{ game.title|default:"Sekiro: Shadows Die Twice" }}</h1>
+                            <p class="game-byline">
+                                {{ game.year|default:"2019" }} - {{ game.developer|default:"FromSoftware" }} -
+                                Published by {{ game.publisher|default:"Activision" }}
+                            </p>
+                        </div>
+                        <div class="rating-pill" aria-label="Average rating">
+                            <strong>{{ game.rating|default:"4.8" }}</strong>
+                            <span>avg rating</span>
+                        </div>
+                    </div>
+
+                    <div class="genre-tags" aria-label="Genre tags">
+                        {% for genre in game.genres %}
+                            <span>{{ genre }}</span>
+                        {% empty %}
+                            <span>Action Adventure</span>
+                            <span>Soulslike</span>
+                            <span>Single Player</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="detail-stats" aria-label="Community stats">
+                        <div>
+                            <strong>{{ game.logs|default:"2.1k" }}</strong>
+                            <span>logs</span>
+                        </div>
+                        <div>
+                            <strong>{{ game.reviews|default:"486" }}</strong>
+                            <span>reviews</span>
+                        </div>
+                        <div>
+                            <strong>74%</strong>
+                            <span>completed</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-actions" aria-label="Game actions">
+                        <a class="button button-primary" href="#">Log game</a>
+                        <a class="button button-secondary" href="#">Add to backlog</a>
+                        <a class="button button-secondary" href="#">Add review</a>
+                    </div>
+                </article>
+            </section>
+
+            <section class="detail-layout">
+                <article class="panel description-panel">
+                    <p class="section-kicker">Game description</p>
+                    <h2>A brutal, beautiful duel against impossible odds</h2>
+                    <p>
+                        {{ game.description|default:"Carve your own path through a reimagined Sengoku Japan as a shinobi bound to protect a young lord with a mysterious bloodline. Every fight asks for nerve, timing, and patience, turning each victory into something worth logging." }}
+                    </p>
+                    <p>
+                        The community keeps coming back for clean boss clears, challenge runs, and that perfect moment
+                        when posture, movement, and instinct finally click.
+                    </p>
+                </article>
+
+                <aside class="panel community-rating">
+                    <p class="section-kicker">User rating</p>
+                    <div class="rating-score">
+                        <strong>{{ game.rating|default:"4.8" }}</strong>
+                        <span>from {{ game.reviews|default:"486" }} reviews</span>
+                    </div>
+                    <div class="rating-bars" aria-label="Community rating distribution">
+                        <div><span>5</span><meter min="0" max="100" value="72">72%</meter></div>
+                        <div><span>4</span><meter min="0" max="100" value="19">19%</meter></div>
+                        <div><span>3</span><meter min="0" max="100" value="6">6%</meter></div>
+                        <div><span>2</span><meter min="0" max="100" value="2">2%</meter></div>
+                        <div><span>1</span><meter min="0" max="100" value="1">1%</meter></div>
+                    </div>
+                    <div class="your-rating">
+                        <span>Your rating</span>
+                        <div aria-label="Choose your rating">
+                            <button type="button">1</button>
+                            <button type="button">2</button>
+                            <button type="button">3</button>
+                            <button type="button">4</button>
+                            <button type="button">5</button>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="content-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Recent reviews</p>
+                        <h2>Fresh notes from the community</h2>
+                    </div>
+                    <a class="section-link" href="#">Read all reviews</a>
+                </div>
+
+                <div class="reviews-grid">
+                    {% for review in recent_reviews %}
+                    <article class="review-card panel">
+                        <div class="review-header">
+                            <span class="avatar">{{ review.user|first|upper }}</span>
+                            <div>
+                                <h3>{{ review.user|default:"Player" }}</h3>
+                                <span>Rated {{ review.rating|default:"5" }} out of 5</span>
+                            </div>
+                        </div>
+                        <p>
+                            {{ review.text|default:"A sharp community review belongs here." }}
+                        </p>
+                    </article>
+                    {% empty %}
+                    <article class="review-card panel">
+                        <div class="review-header">
+                            <span class="avatar">M</span>
+                            <div>
+                                <h3>Maya</h3>
+                                <span>Rated 5 out of 5</span>
+                            </div>
+                        </div>
+                        <p>The combat is so sharp that failing never feels wasted.</p>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Similar games</p>
+                        <h2>More from this developer and nearby picks</h2>
+                    </div>
+                    <a class="section-link" href="#">Browse {{ game.developer|default:"FromSoftware" }}</a>
+                </div>
+
+                <div class="similar-grid">
+                    <article class="similar-card ember-card">
+                        <div class="mini-art">
+                            <span>Action RPG</span>
+                        </div>
+                        <h3>Elden Ring</h3>
+                        <p>4.7 avg - FromSoftware</p>
+                    </article>
+                    <article class="similar-card cobalt-card">
+                        <div class="mini-art">
+                            <span>Gothic Action</span>
+                        </div>
+                        <h3>Bloodborne</h3>
+                        <p>4.8 avg - FromSoftware</p>
+                    </article>
+                    <article class="similar-card moss-card">
+                        <div class="mini-art">
+                            <span>Dark Fantasy</span>
+                        </div>
+                        <h3>Dark Souls III</h3>
+                        <p>4.6 avg - FromSoftware</p>
+                    </article>
+                    <article class="similar-card neon-card">
+                        <div class="mini-art">
+                            <span>Action</span>
+                        </div>
+                        <h3>Nioh 2</h3>
+                        <p>4.3 avg - Team Ninja</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
