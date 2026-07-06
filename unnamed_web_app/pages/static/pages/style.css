@@ -605,30 +605,17 @@ a {
 }
 
 .game-cover {
+    --cover-image: url("https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/814380/library_600x900.jpg?t=1762888662");
     position: relative;
-    display: flex;
-    min-height: 520px;
+    width: min(100%, 360px);
+    aspect-ratio: 2 / 3;
     overflow: hidden;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 24px;
+    align-self: start;
+    justify-self: center;
     border: 1px solid var(--panel-border);
     border-radius: 28px;
-    background:
-        linear-gradient(180deg, transparent 18%, rgba(8, 17, 29, 0.34) 54%, rgba(8, 17, 29, 0.92) 100%),
-        radial-gradient(circle at 28% 18%, rgba(255, 201, 99, 0.86), transparent 22%),
-        radial-gradient(circle at 74% 38%, rgba(121, 240, 211, 0.3), transparent 22%),
-        linear-gradient(145deg, #7a402d 0%, #24150f 58%, #090f1a 100%);
+    background: var(--cover-image) center / cover no-repeat;
     box-shadow: var(--shadow);
-}
-
-.game-cover::before {
-    content: "";
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    pointer-events: none;
 }
 
 .cover-kicker,
@@ -637,6 +624,12 @@ a {
     z-index: 1;
     color: var(--muted);
     font-weight: 700;
+}
+
+.cover-kicker,
+.cover-title,
+.cover-subtitle {
+    display: none;
 }
 
 .cover-kicker {
@@ -1004,7 +997,7 @@ a {
     }
 
     .game-cover {
-        min-height: 420px;
+        width: min(100%, 340px);
     }
 
     .reviews-grid,
@@ -1020,7 +1013,7 @@ a {
     }
 
     .game-cover {
-        min-height: 380px;
+        width: min(100%, 320px);
         border-radius: 24px;
     }
 
