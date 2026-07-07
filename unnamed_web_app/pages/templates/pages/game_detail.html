@@ -40,8 +40,9 @@
                         <div>
                             <h1>{{ game.title|default:"Sekiro: Shadows Die Twice" }}</h1>
                             <p class="game-byline">
-                                {{ game.year|default:"2019" }} - {{ game.developer|default:"FromSoftware" }} -
-                                Published by {{ game.publisher|default:"Activision" }}
+                                <span>{{ game.year|default:"2019" }}</span>
+                                <span>{{ game.developer|default:"FromSoftware" }}</span>
+                                <span>Published by {{ game.publisher|default:"Activision" }}</span>
                             </p>
                         </div>
                         <div class="rating-pill" aria-label="Average rating">
@@ -122,39 +123,112 @@
                 </aside>
             </section>
 
-            <section class="content-section">
-                <div class="section-heading">
+            <section class="content-section reviews-section" aria-labelledby="reviews-heading">
+                <div class="section-heading reviews-heading">
                     <div>
-                        <p class="section-kicker">Recent reviews</p>
-                        <h2>Fresh notes from the community</h2>
+                        <p class="section-kicker">Community</p>
+                        <h2 id="reviews-heading">Reviews</h2>
                     </div>
-                    <a class="section-link" href="#">Read all reviews</a>
+                    <form class="review-sort" method="get">
+                        <label class="sr-only" for="review-sort">Sort reviews</label>
+                        <select id="review-sort" name="sort" onchange="this.form.submit()">
+                            {% for option in review_sort_options %}
+                                <option value="{{ option.value }}" {% if option.selected %}selected{% endif %}>
+                                    {{ option.label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
                 </div>
 
-                <div class="reviews-grid">
-                    {% for review in recent_reviews %}
+                <div class="reviews-list">
+                    {% for review in reviews %}
                     <article class="review-card panel">
                         <div class="review-header">
-                            <span class="avatar">{{ review.user|first|upper }}</span>
-                            <div>
+                            <span class="avatar">{{ review.initial|default:review.user|first|upper }}</span>
+                            <div class="review-author">
                                 <h3>{{ review.user|default:"Player" }}</h3>
                                 <span>Rated {{ review.rating|default:"5" }} out of 5</span>
                             </div>
                         </div>
-                        <p>
+                        <p class="review-copy">
                             {{ review.text|default:"A sharp community review belongs here." }}
                         </p>
+
+                        <div class="review-actions" aria-label="Review actions">
+                            <button class="review-action" type="button" aria-label="Like {{ review.user|default:'Player' }}'s review">
+                                <span class="vote-icon vote-up" aria-hidden="true"></span>
+                                <span>{{ review.likes|default:"0" }}</span>
+                            </button>
+                            <button class="review-action" type="button" aria-label="Dislike {{ review.user|default:'Player' }}'s review">
+                                <span class="vote-icon vote-down" aria-hidden="true"></span>
+                                <span>{{ review.dislikes|default:"0" }}</span>
+                            </button>
+                        </div>
+
+                        <details class="reply-thread">
+                            <summary>
+                                <span class="reply-icon" aria-hidden="true"></span>
+                                <span>Reply</span>
+                                <strong>{{ review.reply_count|default:"0" }}</strong>
+                            </summary>
+                            <div class="reply-panel">
+                                {% for reply in review.replies %}
+                                    <article class="reply-item">
+                                        <span class="avatar avatar-small">{{ reply.initial|default:reply.user|first|upper }}</span>
+                                        <div>
+                                            <h4>{{ reply.user|default:"Player" }}</h4>
+                                            <p>{{ reply.text|default:"Adding to the thread." }}</p>
+                                        </div>
+                                    </article>
+                                {% empty %}
+                                    <p class="reply-empty">No replies yet.</p>
+                                {% endfor %}
+                                <form class="reply-form" action="#" method="post">
+                                    {% csrf_token %}
+                                    <label class="sr-only" for="reply-{{ forloop.counter }}">Write a reply</label>
+                                    <input id="reply-{{ forloop.counter }}" type="text" name="reply" placeholder="Write a reply">
+                                    <button type="submit">Post</button>
+                                </form>
+                            </div>
+                        </details>
                     </article>
                     {% empty %}
                     <article class="review-card panel">
                         <div class="review-header">
                             <span class="avatar">M</span>
-                            <div>
+                            <div class="review-author">
                                 <h3>Maya</h3>
                                 <span>Rated 5 out of 5</span>
                             </div>
                         </div>
-                        <p>The combat is so sharp that failing never feels wasted.</p>
+                        <p class="review-copy">The combat is so sharp that failing never feels wasted.</p>
+                        <div class="review-actions" aria-label="Review actions">
+                            <button class="review-action" type="button" aria-label="Like Maya's review">
+                                <span class="vote-icon vote-up" aria-hidden="true"></span>
+                                <span>0</span>
+                            </button>
+                            <button class="review-action" type="button" aria-label="Dislike Maya's review">
+                                <span class="vote-icon vote-down" aria-hidden="true"></span>
+                                <span>0</span>
+                            </button>
+                        </div>
+                        <details class="reply-thread">
+                            <summary>
+                                <span class="reply-icon" aria-hidden="true"></span>
+                                <span>Reply</span>
+                                <strong>0</strong>
+                            </summary>
+                            <div class="reply-panel">
+                                <p class="reply-empty">No replies yet.</p>
+                                <form class="reply-form" action="#" method="post">
+                                    {% csrf_token %}
+                                    <label class="sr-only" for="reply-empty">Write a reply</label>
+                                    <input id="reply-empty" type="text" name="reply" placeholder="Write a reply">
+                                    <button type="submit">Post</button>
+                                </form>
+                            </div>
+                        </details>
                     </article>
                     {% endfor %}
                 </div>
