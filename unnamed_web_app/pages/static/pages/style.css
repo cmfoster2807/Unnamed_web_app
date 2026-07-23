@@ -2,10 +2,10 @@
     --bg: #07111f;
     --bg-soft: #0d1a2b;
     --panel: rgba(10, 21, 38, 0.88);
-    --panel-border: rgba(130, 245, 211, 0.12);
+    --panel-border: rgba(227, 3, 13, 0.12);
     --text: #f4f7fb;
     --muted: #9eb0c7;
-    --cyan: #79f0d3;
+    --cyan: #e3030d;
     --blue: #72a6ff;
     --orange: #ff8a5b;
     --pink: #ff5fa2;
@@ -34,10 +34,10 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at top left, rgba(121, 240, 211, 0.16), transparent 28%),
+        radial-gradient(circle at top left, rgba(227, 3, 13, 0.16), transparent 28%),
         radial-gradient(circle at top right, rgba(114, 166, 255, 0.18), transparent 32%),
         linear-gradient(180deg, #06101c 0%, #081423 48%, #050b13 100%);
 }
@@ -76,7 +76,7 @@ a {
     padding: 16px 20px;
     margin-bottom: 28px;
     background: rgba(8, 17, 29, 0.8);
-    border: 1px solid rgba(121, 240, 211, 0.15);
+    border: 1px solid rgba(227, 3, 13, 0.15);
     border-radius: 22px;
     backdrop-filter: blur(18px);
     box-shadow: var(--shadow);
@@ -95,15 +95,17 @@ a {
     width: 42px;
     height: 42px;
     border-radius: 14px;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 1.15rem;
-    color: #08111d;
-    background: linear-gradient(135deg, var(--cyan), #cffff2);
-    box-shadow: 0 12px 24px rgba(121, 240, 211, 0.28);
+    color: #ffffff;
+    background: var(--cyan);
+    box-shadow: 0 12px 24px rgba(227, 3, 13, 0.28);
 }
 
 .brand-text {
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 1.1rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -140,9 +142,9 @@ a {
 .nav-cta {
     min-width: fit-content;
     padding: 12px 18px;
-    color: #08111d;
-    background: linear-gradient(135deg, var(--cyan), #d4fff6);
-    box-shadow: 0 14px 28px rgba(121, 240, 211, 0.25);
+    color: #ffffff;
+    background: var(--cyan);
+    box-shadow: 0 14px 28px rgba(227, 3, 13, 0.25);
 }
 
 .nav-cta:hover,
@@ -188,7 +190,8 @@ a {
 .hero h1 {
     margin: 0;
     max-width: 10ch;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: clamp(2.8rem, 5vw, 4.7rem);
     line-height: 0.96;
     letter-spacing: -0.04em;
@@ -215,9 +218,9 @@ a {
 }
 
 .button-primary {
-    color: #08111d;
-    background: linear-gradient(135deg, var(--cyan), #dcfff7);
-    box-shadow: 0 16px 30px rgba(121, 240, 211, 0.24);
+    color: #ffffff;
+    background: var(--cyan);
+    box-shadow: 0 16px 30px rgba(227, 3, 13, 0.24);
 }
 
 .button-secondary {
@@ -243,7 +246,8 @@ a {
 .hero-stats strong {
     display: block;
     margin-bottom: 6px;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 1.45rem;
 }
 
@@ -397,7 +401,7 @@ a {
 .moss-card .game-art {
     background:
         linear-gradient(180deg, transparent, rgba(8, 17, 29, 0.36)),
-        radial-gradient(circle at 50% 15%, rgba(121, 240, 211, 0.66), transparent 23%),
+        radial-gradient(circle at 50% 15%, rgba(227, 3, 13, 0.66), transparent 23%),
         linear-gradient(145deg, #294833, #081711 68%);
 }
 
@@ -476,8 +480,9 @@ a {
     width: 42px;
     height: 42px;
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(121, 240, 211, 0.22), rgba(114, 166, 255, 0.24));
-    font-family: "Arial Black", sans-serif;
+    background: linear-gradient(135deg, rgba(227, 3, 13, 0.22), rgba(114, 166, 255, 0.24));
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
 }
 
 .activity-copy p {
@@ -659,7 +664,8 @@ a {
 .cover-title {
     position: relative;
     z-index: 1;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: clamp(2.4rem, 4vw, 4rem);
     line-height: 0.95;
     text-transform: uppercase;
@@ -678,7 +684,7 @@ a {
     justify-content: space-between;
     background:
         radial-gradient(circle at top right, rgba(255, 95, 162, 0.16), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(121, 240, 211, 0.12), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(227, 3, 13, 0.12), transparent 30%),
         var(--panel);
 }
 
@@ -692,7 +698,8 @@ a {
 .title-row h1 {
     max-width: 12ch;
     margin: 0;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: clamp(2.7rem, 5vw, 5.2rem);
     line-height: 0.98;
 }
@@ -721,14 +728,15 @@ a {
     min-width: 132px;
     place-items: center;
     padding: 18px;
-    border: 1px solid rgba(121, 240, 211, 0.16);
+    border: 1px solid rgba(227, 3, 13, 0.16);
     border-radius: 22px;
     background: rgba(255, 255, 255, 0.05);
     text-align: center;
 }
 
 .rating-pill strong {
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 2.15rem;
     line-height: 1;
 }
@@ -779,7 +787,8 @@ a {
 .detail-stats strong {
     display: block;
     margin-bottom: 6px;
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 1.55rem;
 }
 
@@ -828,7 +837,8 @@ a {
 }
 
 .rating-score strong {
-    font-family: "Arial Black", sans-serif;
+    font-family: "Montserrat", "Poppins", "Inter", sans-serif;
+    font-weight: 900;
     font-size: 3.1rem;
     line-height: 1;
 }
@@ -890,7 +900,7 @@ a {
 
 .your-rating button {
     min-height: 42px;
-    border: 1px solid rgba(121, 240, 211, 0.16);
+    border: 1px solid rgba(227, 3, 13, 0.16);
     border-radius: 14px;
     color: var(--text);
     background: rgba(255, 255, 255, 0.05);
@@ -903,8 +913,8 @@ a {
 .your-rating button:hover,
 .your-rating button:focus-visible {
     transform: translateY(-2px);
-    border-color: rgba(121, 240, 211, 0.48);
-    background: rgba(121, 240, 211, 0.12);
+    border-color: rgba(227, 3, 13, 0.48);
+    background: rgba(227, 3, 13, 0.12);
 }
 
 .similar-grid {
@@ -924,7 +934,7 @@ a {
     width: 100%;
     min-height: 44px;
     padding: 0 16px;
-    border: 1px solid rgba(121, 240, 211, 0.24);
+    border: 1px solid rgba(227, 3, 13, 0.24);
     border-radius: 14px;
     color: var(--text);
     background: rgba(255, 255, 255, 0.05);
@@ -934,7 +944,7 @@ a {
 }
 
 .review-sort select:focus-visible {
-    outline: 2px solid rgba(121, 240, 211, 0.6);
+    outline: 2px solid rgba(227, 3, 13, 0.6);
     outline-offset: 3px;
 }
 
@@ -947,7 +957,7 @@ a {
     display: grid;
     gap: 18px;
     background:
-        linear-gradient(90deg, rgba(121, 240, 211, 0.08), transparent 44%),
+        linear-gradient(90deg, rgba(227, 3, 13, 0.08), transparent 44%),
         var(--panel);
 }
 
@@ -1010,8 +1020,8 @@ a {
 .reply-form button:hover,
 .reply-form button:focus-visible {
     transform: translateY(-2px);
-    border-color: rgba(121, 240, 211, 0.42);
-    background: rgba(121, 240, 211, 0.1);
+    border-color: rgba(227, 3, 13, 0.42);
+    background: rgba(227, 3, 13, 0.1);
 }
 
 .vote-icon {
@@ -1086,7 +1096,7 @@ a {
     gap: 14px;
     margin-top: 14px;
     padding: 16px 0 0 18px;
-    border-left: 2px solid rgba(121, 240, 211, 0.18);
+    border-left: 2px solid rgba(227, 3, 13, 0.18);
 }
 
 .reply-item {
@@ -1129,7 +1139,7 @@ a {
 }
 
 .reply-form input:focus-visible {
-    outline: 2px solid rgba(121, 240, 211, 0.6);
+    outline: 2px solid rgba(227, 3, 13, 0.6);
     outline-offset: 3px;
 }
 
@@ -1196,7 +1206,7 @@ a {
 .moss-card .mini-art {
     background:
         linear-gradient(180deg, transparent, rgba(8, 17, 29, 0.36)),
-        radial-gradient(circle at 50% 15%, rgba(121, 240, 211, 0.66), transparent 23%),
+        radial-gradient(circle at 50% 15%, rgba(227, 3, 13, 0.66), transparent 23%),
         linear-gradient(145deg, #294833, #081711 68%);
 }
 
