@@ -106,8 +106,40 @@ def game_detail(request):
         {"value": "controversial", "label": "Controversial", "selected": selected_sort == "controversial"},
     ]
 
+    popular_lists = [
+        {
+            "title": "Games That Demand Perfect Timing",
+            "author": "Maya",
+            "likes": "428",
+            "game_count": "24",
+            "covers": ["Sekiro", "Elden Ring", "Sifu", "Lies of P"],
+        },
+        {
+            "title": "The Hardest Games I Actually Finished",
+            "author": "Alex",
+            "likes": "317",
+            "game_count": "18",
+            "covers": ["Sekiro", "Bloodborne", "Cuphead", "Celeste"],
+        },
+        {
+            "title": "Essential Samurai Games",
+            "author": "Jordan",
+            "likes": "186",
+            "game_count": "12",
+            "covers": ["Sekiro", "Ghost", "Nioh 2", "Ishin"],
+        },
+        {
+            "title": "Boss Fights I Still Think About",
+            "author": "Nina",
+            "likes": "154",
+            "game_count": "31",
+            "covers": ["Sekiro", "Hades", "Hollow Knight", "God of War"],
+        },
+    ]
+
     return render(request, "pages/game_detail.html", {
         "game": game,
         "reviews": reviews,
         "review_sort_options": review_sort_options,
+        "popular_lists": popular_lists,
     })

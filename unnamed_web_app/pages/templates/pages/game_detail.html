@@ -38,7 +38,6 @@
                 </div>
 
                 <article class="detail-intro panel">
-                    <p class="eyebrow">Featured game</p>
                     <div class="title-row">
                         <div>
                             <h1>{{ game.title|default:"Sekiro: Shadows Die Twice" }}</h1>
@@ -233,6 +232,48 @@
                             </div>
                         </details>
                     </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="content-section" aria-labelledby="popular-lists-heading">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">Community lists</p>
+                        <h2 id="popular-lists-heading">Popular lists featuring {{ game.title }}</h2>
+                    </div>
+                    <a class="section-link" href="#">View all lists</a>
+                </div>
+
+                <div class="popular-lists-grid">
+                    {% for featured_list in popular_lists %}
+                    <article class="popular-list-card">
+                        <a class="popular-list-link" href="#" aria-label="View {{ featured_list.title }} by {{ featured_list.author }}">
+                            <div class="popular-list-collage" aria-hidden="true">
+                                {% for cover in featured_list.covers %}
+                                    <span class="popular-list-cover">{{ cover }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <div class="popular-list-body">
+                                <h3 class="popular-list-title">{{ featured_list.title }}</h3>
+                                <p class="popular-list-byline">
+                                    <span class="avatar avatar-list">{{ featured_list.author|first|upper }}</span>
+                                    <span>List by <strong>{{ featured_list.author }}</strong></span>
+                                </p>
+                                <p class="popular-list-meta">
+                                    <span>{{ featured_list.game_count }} games</span>
+                                    <span>{{ featured_list.likes }} likes</span>
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+                    {% empty %}
+                    <div class="popular-lists-empty panel">
+                        <h3>No community lists yet</h3>
+                        <p>Be the first to add {{ game.title }} to a list.</p>
+                        <a class="button button-secondary" href="#">Create a list</a>
+                    </div>
                     {% endfor %}
                 </div>
             </section>
