@@ -44,6 +44,33 @@ def search_games(query):
     )
     return response.json()
 
+def search_developers(query):
+    """Search IGDB for companies (developers/publishers) by name."""
+    response = requests.post(
+        'https://api.igdb.com/v4/companies',
+        headers=get_headers(),
+        data=f'''
+            fields name, logo.url, description;
+            search "{query}";
+            limit 10;
+        '''
+    )
+    return response.json()
+
+
+def get_games_by_developer(company_id):
+    """Fetch games where this company is a developer."""
+    response = requests.post(
+        'https://api.igdb.com/v4/games',
+        headers=get_headers(),
+        data=f'''
+            fields name, cover.url, first_release_date, genres.name;
+            where involved_companies.company = {company_id} 
+                  & involved_companies.developer = true;
+            limit 50;
+        '''
+    )
+    return response.json()
 
 # ── Fetch single game ─────────────────────────────────────────────────────────
 
@@ -116,3 +143,20 @@ def sync_game(igdb_id):
             game.developers.add(dev)
 
     return game
+
+def sync_developer(igdb_company_id):
+    """Fetch a developer's games from IGDB and sync them locally."""
+    from .models import Developer, Game
+
+    games_data = get_games_by_developer(igdb_company_id)
+    if not games_data:
+        return None
+
+    developer = None
+    for g in games_data:
+        game = sync_game(g['id'])  # reuses your existing sync_game function
+        if game:
+            for dev in game.developers.filter(igdb_id=igdb_company_id):
+                developer = dev
+
+    return developer

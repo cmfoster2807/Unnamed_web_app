@@ -1,29 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search Games</title>
-</head>
-<body>
-    <h1>Search Games</h1>
+{% extends 'base.html' %}
 
-    <form method="GET" action="{% url 'search' %}">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search for a game...">
-        <button type="submit">Search</button>
-    </form>
+{% block content %}
+<form method="get" action="{% url 'search' %}">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search games or developers...">
+    <button type="submit">Search</button>
+</form>
 
-    {% if results %}
-        <ul>
-            {% for game in results %}
-                <li>
-                    {% if game.cover %}
-                        <img src="https:{{ game.cover.url }}" alt="{{ game.name }}">
-                    {% endif %}
-                    <a href="{% url 'game_detail' game.id %}">{{ game.name }}</a>
-                </li>
+{% if query %}
+
+    {% if developer_results %}
+    <section>
+        <h2>Developers</h2>
+        <ul class="developer-results">
+            {% for dev in developer_results %}
+            <li>
+                {% if dev.logo %}
+                <img src="https:{{ dev.logo.url }}" alt="{{ dev.name }}" width="60">
+                {% endif %}
+                <a href="{% url 'developer_detail' dev.id %}">{{ dev.name }}</a>
+            </li>
             {% endfor %}
         </ul>
-    {% elif query %}
-        <p>No results found for "{{ query }}"</p>
+    </section>
     {% endif %}
-</body>
-</html>
+
+    {% if game_results %}
+    <section>
+        <h2>Games</h2>
+        <ul class="game-results">
+            {% for game in game_results %}
+            <li>
+                {% if game.cover %}
+                <img src="https:{{ game.cover.url }}" alt="{{ game.name }}" width="80">
+                {% endif %}
+                <a href="{% url 'game_detail' game.id %}">{{ game.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
+    {% if not developer_results and not game_results %}
+    <p>No results found for "{{ query }}".</p>
+    {% endif %}
+
+{% endif %}
+{% endblock %}
