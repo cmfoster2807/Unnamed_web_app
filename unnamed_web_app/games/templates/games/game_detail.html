@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ game.title }}</title>
+</head>
+<body>
+    <h1>{{ game.title }}</h1>
+
+    {% if game.cover_image_url %}
+        <img src="{{ game.cover_image_url }}" alt="{{ game.title }}">
+    {% endif %}
+
+    <p><strong>Release Date:</strong> {{ game.release_date }}</p>
+    <p><strong>Genre:</strong> {{ game.genre }}</p>
+    <p><strong>Platform:</strong> {{ game.platform }}</p>
+    <p><strong>Description:</strong> {{ game.description }}</p>
+
+    <h2>Developers</h2>
+    {% if game.developers.all %}
+        <ul>
+            {% for dev in game.developers.all %}
+                <li>{{ dev.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No developer info available.</p>
+    {% endif %}
+
+    <a href="{% url 'search' %}">Back to Search</a>
+</body>
+</html>

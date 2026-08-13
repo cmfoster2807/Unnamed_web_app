@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Model for developers links to and from games
 class Developer(models.Model):
     name = models.CharField(max_length=200, unique=True)
+    igdb_id = models.IntegerField(unique=True, null=True, blank=True)  # for RAWG sync
     date_established = models.DateField(null=True, blank=True)
     location = models.CharField(max_length=200, blank=True)
 
@@ -19,11 +20,8 @@ class Game(models.Model):
     platform = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank = True)
     genre = models.CharField(max_length = 100, blank = True)
-    developer = models.ForeignKey(
-        Developer, null = True, blank = True,
-        on_delete = models.SET_NULL,
-        related_name = 'games'
-    )
+    developers = models.ManyToManyField(Developer, blank=True, related_name='games')
+
     
     def __str__(self):
         return self.title
