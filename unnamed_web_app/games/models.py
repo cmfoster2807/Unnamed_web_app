@@ -1,6 +1,36 @@
 from django.db import models 
 from django.contrib.auth.models import User
 
+# In your app's models.py (wherever Profile lives)
+from django.conf import settings
+from django.db import models
+
+class Follow(models.Model):
+    follower = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='following',      # user.following.all() -> Follow objs where user is follower
+        on_delete=models.CASCADE
+    )
+    followed = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='followers',      # user.followers.all() -> Follow objs where user is followed
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['follower', 'followed'], name='unique_follow'),
+            models.CheckConstraint(condition=~models.Q(follower=models.F('followed')), name='no_self_follow'),
+        ]
+        indexes = [
+            models.Index(fields=['follower']),
+            models.Index(fields=['followed']),
+        ]
+
+    def __str__(self):
+        return f"{self.follower} → {self.followed}"
+
 # Model for developers links to and from games
 class Developer(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -56,6 +86,24 @@ class Profile(models.Model):
         on_delete = models.SET_NULL,
         related_name = '+'
     ) 
+
+    def follow(self, other_user):
+        if other_user != self.user:
+            Follow.objects.get_or_create(follower=self.user, followed=other_user)
+
+    def unfollow(self, other_user):
+        Follow.objects.filter(follower=self.user, followed=other_user).delete()
+
+    def is_following(self, other_user):
+        return Follow.objects.filter(follower=self.user, followed=other_user).exists()
+
+    @property
+    def follower_count(self):
+        return self.user.followers.count()
+
+    @property
+    def following_count(self):
+        return self.user.following.count()
 
 # Separate model for selecting favorite games to be displayed on profile page
 class TopGames(models.Model): 
