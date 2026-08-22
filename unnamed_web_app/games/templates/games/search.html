@@ -2,7 +2,23 @@
 
 {% block content %}
 <form method="get" action="{% url 'search' %}">
-    <input type="text" name="q" value="{{ query }}" placeholder="Search games or developers...">
+    <label class="sr-only" for="search-type">Search for</label>
+    <select id="search-type" name="type">
+        <option value="games" {% if search_type == "games" %}selected{% endif %}>
+            Games
+        </option>
+        <option value="developers" {% if search_type == "developers" %}selected{% endif %}>
+            Developers
+        </option>
+    </select>
+
+    <input
+        type="text"
+        name="q"
+        value="{{ query }}"
+        placeholder="Search games or developers..."
+    >
+
     <button type="submit">Search</button>
 </form>
 

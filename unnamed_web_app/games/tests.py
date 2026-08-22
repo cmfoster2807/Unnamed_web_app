@@ -67,3 +67,77 @@ class GameSearchViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Search unavailable")
         self.assertContains(response, "IGDB client ID")
+
+class DeveloperNavigationTests(TestCase):
+    def setUp(self):
+        self.developer = Developer.objects.create(
+            name="Test Studio",
+            igdb_id=404,
+        )
+        self.game = Game.objects.create(
+            title="Test Game",
+            igdb_id=505,
+        )
+        self.game.developers.add(self.developer)
+
+    def test_game_detail_links_to_developer(self):
+        response = self.client.get(
+            reverse("game_detail", args=[self.game.igdb_id])
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            reverse(
+                "developer_detail",
+                args=[self.developer.igdb_id],
+            ),
+        )
+
+    def test_developer_detail_links_to_games(self):
+        response = self.client.get(
+            reverse(
+                "developer_detail",
+                args=[self.developer.igdb_id],
+            )
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response,
+            "games/developer_detail.html",
+        )
+        self.assertContains(response, self.developer.name)
+        self.assertContains(response, self.game.title)
+        self.assertContains(
+            response,
+            reverse("game_detail", args=[self.game.igdb_id]),
+        )
+
+    @patch("games.views.search_developers")
+    def test_search_can_select_developers(
+        self,
+        mock_search_developers,
+    ):
+        mock_search_developers.return_value = [
+            {
+                "id": 606,
+                "name": "Search Studio",
+            }
+        ]
+
+        response = self.client.get(
+            reverse("search"),
+            {
+                "q": "studio",
+                "type": "developers",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        mock_search_developers.assert_called_once_with("studio")
+        self.assertContains(response, "Search Studio")
+        self.assertContains(
+            response,
+            reverse("developer_detail", args=[606]),
+        )

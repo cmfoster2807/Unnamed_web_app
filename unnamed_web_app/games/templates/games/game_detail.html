@@ -47,7 +47,15 @@
                             <h1>{{ game.title }}</h1>
                             <p class="game-byline">
                                 {% if game.release_date %}
-                                    <span>{{ game.release_date|date:"Y" }}</span>
+                                    <span>
+                                        {% if developer.igdb_id %}
+                                            <a href="{% url 'developer_detail' developer.igdb_id %}">
+                                                {{ developer.name }}
+                                            </a>
+                                        {% else %}
+                                            {{ developer.name }}
+                                        {% endif %}
+                                    </span>
                                 {% endif %}
                                 {% for developer in game.developers.all %}
                                     <span>{{ developer.name }}</span>
@@ -117,9 +125,13 @@
                         <dt>Developer{{ game.developers.count|pluralize }}</dt>
                         <dd>
                             {% for developer in game.developers.all %}
-                                {{ developer.name }}{% if not forloop.last %}, {% endif %}
-                            {% empty %}
-                                Not listed
+                                {% if developer.igdb_id %}
+                                    <a href="{% url 'developer_detail' developer.igdb_id %}">
+                                        {{ developer.name }}
+                                    </a>
+                                {% else %}
+                                    {{ developer.name }}
+                                {% endif %}{% if not forloop.last %}, {% endif %}
                             {% endfor %}
                         </dd>
                     </dl>

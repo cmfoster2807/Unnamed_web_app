@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ developer.name }} | Gameboxd{% endblock %}
+
+{% block content %}
+<section class="content-section">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">Developer</p>
+            <h1>{{ developer.name }}</h1>
+        </div>
+
+        <a class="section-link" href="{% url 'search' %}?type=developers">
+            Back to search
+        </a>
+    </div>
+
+    <article class="panel">
+        {% if developer.date_established %}
+            <p>
+                <strong>Established:</strong>
+                {{ developer.date_established|date:"F j, Y" }}
+            </p>
+        {% endif %}
+
+        {% if developer.location %}
+            <p><strong>Location:</strong> {{ developer.location }}</p>
+        {% endif %}
+    </article>
+</section>
+
+<section class="content-section" aria-labelledby="developer-games-heading">
+    <div class="section-heading">
+        <div>
+            <p class="section-kicker">Games</p>
+            <h2 id="developer-games-heading">
+                Games by {{ developer.name }}
+            </h2>
+        </div>
+    </div>
+
+    <ul class="stack-list">
+        {% for game in developer.games.all %}
+            <li>
+                <strong>
+                    {% if game.igdb_id %}
+                        <a href="{% url 'game_detail' game.igdb_id %}">
+                            {{ game.title }}
+                        </a>
+                    {% else %}
+                        {{ game.title }}
+                    {% endif %}
+                </strong>
+
+                <span>
+                    {{ game.release_date|date:"Y"|default:"Release date unknown" }}
+                </span>
+            </li>
+        {% empty %}
+            <li>
+                <strong>No games found</strong>
+                <span>No games are connected to this developer yet.</span>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

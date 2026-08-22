@@ -1,8 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.http import Http404
+from django.shortcuts import render
 from requests import RequestException
 
-from .models import Game
-from .igdb import search_developers, search_games, sync_game
+from .igdb import (
+    search_developers,
+    search_games,
+    sync_developer,
+    sync_game,
+)
+from .models import Developer, Game
 
 
 def search(request):
@@ -44,13 +50,26 @@ def game_detail(request, igdb_id):
     return render(request, 'games/game_detail.html', {'game': game})
 
 def developer_detail(request, igdb_id):
-    """Serve from local DB if exists, otherwise sync from IGDB first."""
-    from .models import Developer
-    from .igdb import sync_developer
+    """Load a developer locally or synchronize it from IGDB."""
 
-    try:
-        developer = Developer.objects.get(igdb_id=igdb_id)
-    except Developer.DoesNotExist:
-        developer = sync_developer(igdb_id)
+    developer = (
+        Developer.objects
+        .prefetch_related("games")
+        .filter(igdb_id=igdb_id)
+        .first()
+    )
 
-    return render(request, 'games/developer_detail.html', {'developer': developer})
+    if developer is None:
+        try:
+            developer = sync_developer(igdb_id)
+        except (KeyError, ValueError, RequestException) as exc:
+            raise Http404("Developer is unavailable.") from exc
+
+    if developer is None:
+        raise Http404("Developer not found.")
+
+    return render(
+        request,
+        "games/developer_detail.html",
+        {"developer": developer},
+    )
