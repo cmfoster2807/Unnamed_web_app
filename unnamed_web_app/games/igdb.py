@@ -15,6 +15,7 @@ def get_access_token():
             'grant_type': 'client_credentials',
         }
     )
+    response.raise_for_status()
     return response.json()['access_token']
 
 

@@ -1,31 +1,164 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>{{ game.title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ game.title }} | Gameboxd</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
 </head>
-<body>
-    <h1>{{ game.title }}</h1>
+<body class="detail-page">
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand" href="{% url 'home' %}">
+                <span class="brand-mark">G</span>
+                <span class="brand-text">Gameboxd</span>
+            </a>
 
-    {% if game.cover_image_url %}
-        <img src="{{ game.cover_image_url }}" alt="{{ game.title }}">
-    {% endif %}
+            <nav class="site-nav" aria-label="Primary navigation">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'search' %}">Games</a>
+                <a href="{% url 'search' %}">Search</a>
+            </nav>
 
-    <p><strong>Release Date:</strong> {{ game.release_date }}</p>
-    <p><strong>Genre:</strong> {{ game.genre }}</p>
-    <p><strong>Platform:</strong> {{ game.platform }}</p>
-    <p><strong>Description:</strong> {{ game.description }}</p>
+            <a class="nav-cta" href="{% url 'search' %}">Find a game</a>
+        </header>
 
-    <h2>Developers</h2>
-    {% if game.developers.all %}
-        <ul>
-            {% for dev in game.developers.all %}
-                <li>{{ dev.name }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No developer info available.</p>
-    {% endif %}
+        <main>
+            <section class="detail-hero">
+                <div
+                    class="game-cover{% if not game.cover_image_url %} no-cover{% endif %}"
+                    role="img"
+                    aria-label="{% if game.cover_image_url %}Cover art for {{ game.title }}{% else %}No cover art available for {{ game.title }}{% endif %}"
+                    style="--cover-image: {% if game.cover_image_url %}url('{{ game.cover_image_url }}'){% else %}linear-gradient(145deg, #17243a, #08111d){% endif %};"
+                >
+                    {% if not game.cover_image_url %}
+                        <span class="cover-title">{{ game.title }}</span>
+                    {% endif %}
+                </div>
 
-    <a href="{% url 'search' %}">Back to Search</a>
+                <article class="detail-intro panel">
+                    <div class="title-row">
+                        <div>
+                            <p class="section-kicker">Game details</p>
+                            <h1>{{ game.title }}</h1>
+                            <p class="game-byline">
+                                {% if game.release_date %}
+                                    <span>{{ game.release_date|date:"Y" }}</span>
+                                {% endif %}
+                                {% for developer in game.developers.all %}
+                                    <span>{{ developer.name }}</span>
+                                {% empty %}
+                                    <span>Developer unknown</span>
+                                {% endfor %}
+                                {% if game.platform %}
+                                    <span>{{ game.platform }}</span>
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="rating-pill" aria-label="Review count">
+                            <strong>{{ game.review_set.count }}</strong>
+                            <span>review{{ game.review_set.count|pluralize }}</span>
+                        </div>
+                    </div>
+
+                    {% if game.genre %}
+                        <div class="genre-tags" aria-label="Genre">
+                            <span>{{ game.genre }}</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="detail-stats" aria-label="Game information">
+                        <div>
+                            <strong>{% if game.release_date %}{{ game.release_date|date:"Y" }}{% else %}—{% endif %}</strong>
+                            <span>released</span>
+                        </div>
+                        <div>
+                            <strong>{{ game.review_set.count }}</strong>
+                            <span>reviews</span>
+                        </div>
+                        <div>
+                            <strong>{% if game.platform %}{{ game.platform }}{% else %}—{% endif %}</strong>
+                            <span>platform</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-actions" aria-label="Game actions">
+                        <a class="button button-primary" href="{% url 'search' %}">Back to search</a>
+                        <button class="button button-secondary" type="button" disabled title="Game logging is coming next">Log game</button>
+                        <button class="button button-secondary" type="button" disabled title="Backlog support is coming next">Add to backlog</button>
+                    </div>
+                </article>
+            </section>
+
+            <section class="detail-layout">
+                <article class="panel description-panel">
+                    <p class="section-kicker">About the game</p>
+                    <h2>{{ game.title }}</h2>
+                    <p>{{ game.description|default:"No description is available for this game yet." }}</p>
+                </article>
+
+                <aside class="panel community-rating">
+                    <p class="section-kicker">Game information</p>
+                    <dl>
+                        <dt>Release date</dt>
+                        <dd>{{ game.release_date|date:"F j, Y"|default:"Unknown" }}</dd>
+
+                        <dt>Platform</dt>
+                        <dd>{{ game.platform|default:"Not listed" }}</dd>
+
+                        <dt>Genre</dt>
+                        <dd>{{ game.genre|default:"Not listed" }}</dd>
+
+                        <dt>Developer{{ game.developers.count|pluralize }}</dt>
+                        <dd>
+                            {% for developer in game.developers.all %}
+                                {{ developer.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Not listed
+                            {% endfor %}
+                        </dd>
+                    </dl>
+                </aside>
+            </section>
+
+            <section class="content-section reviews-section" aria-labelledby="reviews-heading">
+                <div class="section-heading reviews-heading">
+                    <div>
+                        <p class="section-kicker">Community</p>
+                        <h2 id="reviews-heading">Reviews</h2>
+                    </div>
+                    <span>{{ game.review_set.count }} total</span>
+                </div>
+
+                <div class="reviews-list">
+                    {% for review in game.review_set.all %}
+                        <article class="review-card panel">
+                            <div class="review-header">
+                                <span class="avatar">{{ review.user.username|first|upper }}</span>
+                                <div class="review-author">
+                                    <h3>{{ review.user.username }}</h3>
+                                    <span>Rated {{ review.rating }} out of 10</span>
+                                </div>
+                            </div>
+                            <p class="review-copy">
+                                {{ review.review_text|default:"This player left a rating without a written review." }}
+                            </p>
+                            <small>Reviewed {{ review.created_at|date:"F j, Y" }}</small>
+                        </article>
+                    {% empty %}
+                        <div class="popular-lists-empty panel">
+                            <h3>No reviews yet</h3>
+                            <p>{{ game.title }} does not have any community reviews yet.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
+from requests import RequestException
+
 from .models import Game
-from .igdb import search_games, sync_game
+from .igdb import search_developers, search_games, sync_game
 
 
 def search(request):
@@ -10,18 +12,26 @@ def search(request):
 
     game_results = []
     developer_results = []
+    search_error = None
 
     if query:
-        if search_type == 'developers':
-            developer_results = search_developers(query)
-        else:
-            game_results = search_games(query)
+        try:
+            if search_type == 'developers':
+                developer_results = search_developers(query)
+            else:
+                game_results = search_games(query)
+        except (KeyError, ValueError, RequestException):
+            search_error = (
+                'Game search is unavailable. Check the IGDB client ID and '
+                'client secret in your local .env file.'
+            )
 
     return render(request, 'games/search.html', {
         'game_results': game_results,
         'developer_results': developer_results,
         'query': query,
         'search_type': search_type,
+        'search_error': search_error,
     })
 
 def game_detail(request, igdb_id):
